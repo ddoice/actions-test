@@ -15,6 +15,9 @@ jobs:
       - uses: supercharge/mongodb-github-action@1.7.0
         with:
           mongodb-version: '3.6.11'
+      - uses: supercharge/redis-github-action@1.2.0
+        with:
+          redis-version: '5.0.6'          
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
@@ -23,6 +26,12 @@ jobs:
         run: |
           echo "node: $(node -v)"
           echo "npm: $(npm --version)"
+
+      - name: "Test mongo"
+        run: netcat -zv localhost 27017
+        
+      - name: "Test redis"
+        run: netcat -zv localhost 6379        
 
       - name: install
         run: npm ci
